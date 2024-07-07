@@ -5,6 +5,7 @@
   font-size: 16px;
   color: rgba(255, 255, 255, 1);
   font-family: Helvetica, Arial, sans-serif;
+  /* overflow: hidden; */
 }
 body {
   background: rgb(0, 0, 0);
@@ -59,10 +60,9 @@ body {
   height: 85vh;
   width: 90vw;
   margin: auto;
-  display: grid;
-  grid-template-columns: 70% 30%;
-  gap: 1rem;
+  display: flex;
   position: relative;
+  gap: 1rem;
 }
 
 /* styling two container */
@@ -72,16 +72,21 @@ body {
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 20px;
   padding: 1rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 /* first partion */
+.first-partion {
+  height: 100%;
+  width: 100%;
+}
 /* upper part */
 .upper-detail-part {
   display: flex;
   justify-content: space-between;
 }
-/* .current-weather-img-container {
-  width: 50%;
-} */
+
 .current-weather-img-container > img {
   height: 10rem;
 }
@@ -106,19 +111,30 @@ body {
 
 /* lower part */
 .lower-detail-part {
-  /* position: relative; */
+  position: relative;
+  width: 100%;
+}
+.card-container {
+  position: absolute;
+  width: 100%;
   display: flex;
-  gap: 1rem;
-  justify-content: space-around;
-  margin-top: 10rem;
+  gap: 2.5rem;
+  justify-content: space-between;
+  margin-top: 20%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+}
+.card-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 .card {
-  /* border: 1px solid black; */
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-width: 70px;
 }
 .future-weather-pic > img {
   height: 4rem;
@@ -132,13 +148,18 @@ body {
 /* responsive  */
 @media only screen and (max-width: 700px) {
   * {
-    font-size: 14px;
+    font-size: 12px;
   }
-}
-@media only screen and (max-width: 700px) {
   /* shrinking .content-container */
   .content-container {
-    grid-template-columns: none;
-    grid-template-rows: 100% 50%;
+    flex-direction: column;
+  }
+  .first-partion,
+  .second-partion {
+    flex: none;
+    width: 100%;
+  }
+  .lower-detail-part {
+    margin-top: 10%;
   }
 }
