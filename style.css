@@ -5,11 +5,10 @@
   font-size: 16px;
   color: rgba(255, 255, 255, 1);
   font-family: Helvetica, Arial, sans-serif;
-  /* overflow: hidden; */
 }
 body {
   background: rgb(0, 0, 0);
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(
     180deg,
     rgba(82, 82, 82, 0.85) 0%,
@@ -57,29 +56,33 @@ body {
 
 /* content-container */
 .content-container {
-  height: 85vh;
-  width: 90vw;
+  height: 85%;
+  width: 90%;
   margin: auto;
   display: flex;
-  position: relative;
   gap: 1rem;
 }
 
 /* styling two container */
 .first-partion,
 .second-partion {
+  width: 100vw;
+  min-height: 85vh;
   border-right: 10px;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 20px;
   padding: 1rem;
   display: flex;
-  flex: 1;
   flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 2rem;
 }
 /* first partion */
 .first-partion {
-  height: 100%;
-  width: 100%;
+  flex: 0 0 70%;
+}
+.second-partion {
+  flex: 0 0 30%;
 }
 /* upper part */
 .upper-detail-part {
@@ -111,14 +114,13 @@ body {
 
 /* lower part */
 .lower-detail-part {
-  position: relative;
   width: 100%;
 }
 .card-container {
-  position: absolute;
+  padding: 0 1rem;
   width: 100%;
   display: flex;
-  gap: 2.5rem;
+  gap: 2.2rem;
   justify-content: space-between;
   margin-top: 20%;
   overflow-x: scroll;
@@ -134,7 +136,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 70px;
+  min-width: 50px;
 }
 .future-weather-pic > img {
   height: 4rem;
@@ -153,6 +155,7 @@ body {
   /* shrinking .content-container */
   .content-container {
     flex-direction: column;
+    position: relative;
   }
   .first-partion,
   .second-partion {
