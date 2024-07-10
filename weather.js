@@ -16,13 +16,27 @@ const updateTime = () => {
 
 setInterval(updateTime, 1000); // calling the updateTime function every second
 
+//
+const fetchWeatherData = (place) => {
+  const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${apiKey}&units=metric`;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => console.error("Error during fetching data :=> ", error));
+};
+
+
 // validateInputField function check wheter the input is empty or not
 // if the field is not empty then it do futher process otherwise it will raise a alert
 const validateInputField = () => {
   const location = document.getElementById("searchValue").value;
   if (location !== "") {
     document.getElementById("searchValue").value = "";
-    console.log(location);
+    fetchWeatherData(location);
   } else {
     alert("Enter the location value");
   }
@@ -38,5 +52,3 @@ const inputField = document.getElementById("searchValue");
 inputField.addEventListener("keydown", (event) => {
   if (event.key === "Enter") validateInputField();
 });
-
-//
