@@ -17,8 +17,8 @@ const updateTime = () => {
 setInterval(updateTime, 1000); // calling the updateTime function every second
 
 //
-const fetchWeatherData = (place) => {
-  const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
+function fetchWeatherData(place) {
+  // const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${apiKey}&units=metric`;
 
   fetch(url)
@@ -27,8 +27,7 @@ const fetchWeatherData = (place) => {
       console.log(data);
     })
     .catch((error) => console.error("Error during fetching data :=> ", error));
-};
-
+}
 
 // validateInputField function check wheter the input is empty or not
 // if the field is not empty then it do futher process otherwise it will raise a alert
