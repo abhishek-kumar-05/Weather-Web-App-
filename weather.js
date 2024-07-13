@@ -17,16 +17,32 @@ const updateTime = () => {
 setInterval(updateTime, 1000); // calling the updateTime function every second
 
 //
-function fetchWeatherData(place) {
-  // const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${apiKey}&units=metric`;
+const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
+async function geoLocationData(place) {
+  const geoLocationUrl = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${apiKey}`;
+  try {
+    const geoLocResponse = await fetch(geoLocationUrl);
+    const geoLocData = await geoLocResponse.json();
+    if (geoLocData.cod === 200) {
+      const { lat, lon } = geoLocData.coord;
+      fetchWeatherData(lat, lon);
+    } else {
+      alert(geoLocData.message);
+    }
+  } catch (error) {
+    console.error("Error during fetching data :=> ", error);
+  }
+}
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => console.error("Error during fetching data :=> ", error));
+async function fetchWeatherData(lat, lon) {
+  const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,alerts&appid=${apiKey}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error message during fetching data => ", error);
+  }
 }
 
 // validateInputField function check wheter the input is empty or not
@@ -35,7 +51,7 @@ const validateInputField = () => {
   const location = document.getElementById("searchValue").value;
   if (location !== "") {
     document.getElementById("searchValue").value = "";
-    fetchWeatherData(location);
+    geoLocationData(location);
   } else {
     alert("Enter the location value");
   }
