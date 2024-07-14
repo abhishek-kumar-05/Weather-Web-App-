@@ -18,6 +18,7 @@ setInterval(updateTime, 1000); // calling the updateTime function every second
 
 //
 const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
+// function getting longitutde and latitude
 async function geoLocationData(place) {
   const geoLocationUrl = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${apiKey}`;
   try {
