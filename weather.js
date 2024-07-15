@@ -34,7 +34,7 @@ async function geoLocationData(place) {
     console.error("Error during fetching data :=> ", error);
   }
 }
-
+// function get exact data about weather using long and lat
 async function fetchWeatherData(lat, lon) {
   const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,alerts&appid=${apiKey}`;
   try {
