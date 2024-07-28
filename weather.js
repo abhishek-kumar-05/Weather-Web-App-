@@ -17,33 +17,29 @@ const updateTime = () => {
 setInterval(updateTime, 1000); // calling the updateTime function every second
 
 //
-const apiKey = "9c82f00eb62ae7f2124cd1a2bf5ce9de";
-// function getting longitutde and latitude
-async function geoLocationData(place) {
-  const geoLocationUrl = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${apiKey}`;
-  try {
-    const geoLocResponse = await fetch(geoLocationUrl);
-    const geoLocData = await geoLocResponse.json();
-    if (geoLocData.cod === 200) {
-      const { lat, lon } = geoLocData.coord;
-      fetchWeatherData(lat, lon);
-    } else {
-      alert(geoLocData.message);
-    }
-  } catch (error) {
-    console.error("Error during fetching data :=> ", error);
-  }
-}
+// apiKey
+const apiKey = "Fyjm0Uz6Qy1lUTT1Eu7BAW4LIcEQFFFI";
+
 // function get exact data about weather using long and lat
-async function fetchWeatherData(lat, lon) {
-  const url = `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+async function fetchWeatherData(location) {
+  const url = `https://api.tomorrow.io/v4/timelines?location=${location}&fields=temperature,temperatureMax,temperatureMin,weatherCode&timesteps=current,1h,1d&units=metric&apikey=${apiKey}`;
   try {
     const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
+    const weatherData = await response.json();
+
+    // fetching current weather details from the weatherData object
+    const currentWeather = weatherData.data.timelines[2].intervals[0].values;
+    console.log(currentWeather);
+    updateUI(currentWeather);
   } catch (error) {
     console.error("Error message during fetching data => ", error);
   }
+}
+
+// updating ui by providing data
+function updateUI(currentWeather) {
+  document.querySelector(".degree-number").textContent =
+    currentWeather.temperature;
 }
 
 // validateInputField function check wheter the input is empty or not
@@ -52,7 +48,8 @@ const validateInputField = () => {
   const location = document.getElementById("searchValue").value;
   if (location !== "") {
     document.getElementById("searchValue").value = "";
-    geoLocationData(location);
+    const encodedLocation = encodeURIComponent(location);
+    fetchWeatherData(encodedLocation);
   } else {
     alert("Enter the location value");
   }
