@@ -1,22 +1,8 @@
-// updateTime is use to set time in clock element in (12 hour) format
-const updateTime = () => {
-  // accessing the orginal time
-  const time = new Date();
-  let hour = time.getHours(); // hour
-  const min = time.getMinutes().toString().padStart(2, "0"); // minute
-  const ampm = hour >= 12 ? "PM" : "AM"; // checking wether its am or pm
-  // changing the hour into (12 hour) format
-  hour = hour % 12;
-  hour = hour ? hour : 12;
-  const formatedHour = hour.toString().padStart(2, "0");
-  // accessing the clock element and updating the content
-  let timeVar = document.querySelector(".clock h1");
-  timeVar.textContent = `${formatedHour}:${min} ${ampm}`;
-};
+import { updateTime, changeTimeFormat } from "./time.js";
+import { updateUI } from "./updateui.js";
 
 setInterval(updateTime, 1000); // calling the updateTime function every second
 
-//
 // apiKey
 const apiKey = "Fyjm0Uz6Qy1lUTT1Eu7BAW4LIcEQFFFI";
 
@@ -26,20 +12,32 @@ async function fetchWeatherData(location) {
   try {
     const response = await fetch(url);
     const weatherData = await response.json();
-
+    console.log(weatherData);
     // fetching current weather details from the weatherData object
     const currentWeather = weatherData.data.timelines[2].intervals[0].values;
-    console.log(currentWeather);
-    updateUI(currentWeather);
+    const nextHourWeather = weatherData.data.timelines[1].intervals;
+
+    const now = new Date();
+    const startTime = new Date(now.getTime() + 0.5 * 60 * 60 * 1000);
+    const endTime = new Date(now.getTime() + 13 * 60 * 60 * 1000);
+
+    const toIST = (date) => {
+      const utcOffset = 5.5 * 60 * 60 * 1000;
+      return new Date(date.getTime() + utcOffset);
+    };
+
+    const next12HourTemp = nextHourWeather.filter((element) => {
+      const timeUTC = new Date(element.startTime);
+
+      element.startTime = timeUTC;
+
+      return timeUTC > startTime && timeUTC <= endTime;
+    });
+
+    updateUI(currentWeather, next12HourTemp);
   } catch (error) {
     console.error("Error message during fetching data => ", error);
   }
-}
-
-// updating ui by providing data
-function updateUI(currentWeather) {
-  document.querySelector(".degree-number").textContent =
-    currentWeather.temperature;
 }
 
 // validateInputField function check wheter the input is empty or not
@@ -47,6 +45,7 @@ function updateUI(currentWeather) {
 const validateInputField = () => {
   const location = document.getElementById("searchValue").value;
   if (location !== "") {
+    document.querySelector(".locName").textContent = location.toUpperCase();
     document.getElementById("searchValue").value = "";
     const encodedLocation = encodeURIComponent(location);
     fetchWeatherData(encodedLocation);

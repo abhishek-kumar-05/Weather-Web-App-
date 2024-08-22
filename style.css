@@ -108,7 +108,8 @@ body {
   font-size: 1.5rem;
 }
 
-.textual-detail {
+.textual-detail,
+.locName {
   font-size: 2rem;
 }
 
@@ -117,7 +118,7 @@ body {
   width: 100%;
 }
 .card-container {
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   width: 100%;
   display: flex;
   gap: 2.2rem;
@@ -136,7 +137,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 50px;
+  min-width: 60px;
 }
 .future-weather-pic > img {
   height: 4rem;
