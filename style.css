@@ -148,6 +148,37 @@ body {
   gap: 0.5rem;
 }
 
+.dailyforecast-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.dailyforecast-container > h1 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.dailyforecast-content {
+  /* height: 100%; */
+}
+.dailyforecast-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  width: 100%;
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  /* border: 1px solid rgba(255, 255, 255, 0.4); */
+}
+.dailyforecast-date,
+.dailyforecast-weather-detail {
+  font-size: 1.2rem;
+}
+.dailyforecast-weather-icon > img {
+  height: 3rem;
+}
+
 /* responsive  */
 @media only screen and (max-width: 700px) {
   * {
@@ -165,5 +196,14 @@ body {
   }
   .lower-detail-part {
     margin-top: 10%;
+  }
+
+  .dailyforecast-container > h1 {
+    font-size: 2.7rem;
+    margin-bottom: 1rem;
+  }
+  .dailyforecast-date,
+  .dailyforecast-weather-detail {
+    font-size: 2rem;
   }
 }
