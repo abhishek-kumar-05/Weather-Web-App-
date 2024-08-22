@@ -16,6 +16,7 @@ async function fetchWeatherData(location) {
     // fetching current weather details from the weatherData object
     const currentWeather = weatherData.data.timelines[2].intervals[0].values;
     const nextHourWeather = weatherData.data.timelines[1].intervals;
+    const dailyForecast = weatherData.data.timelines[0].intervals;
 
     const now = new Date();
     const startTime = new Date(now.getTime() + 0.5 * 60 * 60 * 1000);
@@ -34,7 +35,7 @@ async function fetchWeatherData(location) {
       return timeUTC > startTime && timeUTC <= endTime;
     });
 
-    updateUI(currentWeather, next12HourTemp);
+    updateUI(currentWeather, next12HourTemp, dailyForecast);
   } catch (error) {
     console.error("Error message during fetching data => ", error);
   }
@@ -64,3 +65,5 @@ const inputField = document.getElementById("searchValue");
 inputField.addEventListener("keydown", (event) => {
   if (event.key === "Enter") validateInputField();
 });
+
+export const dailyForecastDetails = (element) => {};

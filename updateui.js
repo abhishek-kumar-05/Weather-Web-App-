@@ -1,15 +1,20 @@
 import { changeTimeFormat } from "./time.js";
+import { dailyForecastDetails } from "./weather.js";
 
 // updating ui by providing data
-export function updateUI(currentWeather, nextHourWeather) {
+export function updateUI(currentWeather, nextHourWeather, dailyForecast) {
   document.querySelector(".degree-number").textContent = Math.round(
     currentWeather.temperature
   );
 
   const cardContainer = document.querySelector(".card-container");
+  const dailyForecastContainer = document.querySelector(
+    ".dailyforecast-container"
+  );
 
   // clearing previous card container element
   cardContainer.innerHTML = "";
+  dailyForecastContainer.innerHTML = "";
 
   nextHourWeather.forEach((element) => {
     const timeUTC = new Date(element.startTime);
@@ -33,5 +38,19 @@ export function updateUI(currentWeather, nextHourWeather) {
     )}°</span>
                 </div>`;
     cardContainer.appendChild(card);
+  });
+
+  dailyForecast.forEach((element) => {
+    const [day, date, tempmax, tempmin] = dailyForecastDetails(element);
+    const card = document.createElement("div");
+    card.classList.add("dailyforecast-card");
+    card.innerHTML = `<div class="dailyforecast-content">
+                <span class="dailyforecast-date">${day} ${date}</span>
+                <span class="dailyforecast-weather-icon"
+                  ><img src="assets/haze.png" alt="weather icon"
+                /></span>
+                <span class="dailyforecast-weather-detail">${tempmax}°/${tempmin}°</span>
+              </div>`;
+    dailyForecastContainer.appendChild(card);
   });
 }
