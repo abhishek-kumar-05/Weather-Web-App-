@@ -1,5 +1,4 @@
 import { changeTimeFormat } from "./time.js";
-import { dailyForecastDetails } from "./weather.js";
 
 // updating ui by providing data
 export function updateUI(currentWeather, nextHourWeather, dailyForecast) {
@@ -49,8 +48,22 @@ export function updateUI(currentWeather, nextHourWeather, dailyForecast) {
                 <span class="dailyforecast-weather-icon"
                   ><img src="assets/haze.png" alt="weather icon"
                 /></span>
-                <span class="dailyforecast-weather-detail">${tempmax}°/${tempmin}°</span>
+                <span class="dailyforecast-weather-detail">${tempmax}° / ${tempmin}°</span>
               </div>`;
     dailyForecastContainer.appendChild(card);
   });
+}
+
+function dailyForecastDetails(element) {
+  const startTime = element.startTime;
+  const tempMax = Math.round(element.values.temperatureMax);
+  const tempMin = Math.round(element.values.temperatureMin);
+
+  const dateObject = new Date(startTime);
+  const date = dateObject.getUTCDate();
+  const dayIndex = dateObject.getUTCDay();
+  const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayName = dayOfWeek[dayIndex];
+
+  return [dayName, date, tempMax, tempMin];
 }

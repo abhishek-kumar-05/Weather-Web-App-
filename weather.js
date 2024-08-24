@@ -12,7 +12,7 @@ async function fetchWeatherData(location) {
   try {
     const response = await fetch(url);
     const weatherData = await response.json();
-    console.log(weatherData);
+    // console.log(weatherData);
     // fetching current weather details from the weatherData object
     const currentWeather = weatherData.data.timelines[2].intervals[0].values;
     const nextHourWeather = weatherData.data.timelines[1].intervals;
@@ -46,7 +46,8 @@ async function fetchWeatherData(location) {
 const validateInputField = () => {
   const location = document.getElementById("searchValue").value;
   if (location !== "") {
-    document.querySelector(".locName").textContent = location.toUpperCase();
+    document.querySelector(".locName").textContent =
+      location.substring(0, 1).toUpperCase() + location.substring(1);
     document.getElementById("searchValue").value = "";
     const encodedLocation = encodeURIComponent(location);
     fetchWeatherData(encodedLocation);
@@ -66,4 +67,3 @@ inputField.addEventListener("keydown", (event) => {
   if (event.key === "Enter") validateInputField();
 });
 
-export const dailyForecastDetails = (element) => {};
