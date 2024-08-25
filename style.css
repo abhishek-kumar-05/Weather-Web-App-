@@ -171,9 +171,22 @@ body {
 .dailyforecast-date,
 .dailyforecast-weather-detail {
   font-size: 1.2rem;
+  flex: 1;
+}
+.dailyforecast-weather-icon {
+  flex: 0 0 auto; /* Keeps the icon size fixed */
+  margin: 0 10px; /* Adds space around the icon */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the icon vertically */
 }
 .dailyforecast-weather-icon > img {
   height: 3rem;
+  width: auto; /* Maintains aspect ratio */
+  max-width: 50px;
+}
+.dailyforecast-weather-detail{
+  text-align: right;
 }
 
 /* responsive  */
