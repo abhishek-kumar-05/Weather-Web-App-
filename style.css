@@ -160,9 +160,6 @@ body {
   gap: 25px;
 }
 .dailyforecast-content {
-  /* height: 100%; */
-}
-.dailyforecast-content {
   display: flex;
   justify-content: space-between;
   align-items: center;

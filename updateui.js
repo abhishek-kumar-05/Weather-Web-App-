@@ -40,11 +40,11 @@ export function updateUI(currentWeather, nextHourWeather, dailyForecast) {
   });
 
   dailyForecast.forEach((element) => {
-    const [day, date, tempmax, tempmin] = dailyForecastDetails(element);
+    const [dayDate, tempmax, tempmin] = dailyForecastDetails(element);
     const card = document.createElement("div");
     card.classList.add("dailyforecast-card");
     card.innerHTML = `<div class="dailyforecast-content">
-                <span class="dailyforecast-date">${day} ${date}</span>
+                <span class="dailyforecast-date">${dayDate}</span>
                 <span class="dailyforecast-weather-icon"
                   ><img src="assets/haze.png" alt="weather icon"
                 /></span>
@@ -65,5 +65,21 @@ function dailyForecastDetails(element) {
   const dayOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const dayName = dayOfWeek[dayIndex];
 
-  return [dayName, date, tempMax, tempMin];
+  const getTodayDate = () => {
+    const today = new Date();
+    const day = dayOfWeek[today.getDay()];
+    const date = today.getDate();
+    return `${day} ${date}`;
+  };
+
+  const today = getTodayDate();
+  let dayDate = "";
+  if (today === `${dayName} ${date}`) {
+    dayDate = "Today ";
+  } else {
+    dayDate = `${dayName} ${date}`;
+  }
+  console.log(dayDate);
+
+  return [dayDate, tempMax, tempMin];
 }
