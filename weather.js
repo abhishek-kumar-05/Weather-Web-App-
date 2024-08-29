@@ -8,11 +8,11 @@ const apiKey = "Fyjm0Uz6Qy1lUTT1Eu7BAW4LIcEQFFFI";
 
 // function get exact data about weather using long and lat
 async function fetchWeatherData(location) {
-  const url = `https://api.tomorrow.io/v4/timelines?location=${location}&fields=temperature,temperatureMax,temperatureMin,weatherCode&timesteps=current,1h,1d&units=metric&apikey=${apiKey}`;
+  const url = `https://api.tomorrow.io/v4/timelines?location=${location}&fields=temperature,temperatureMax,temperatureMin,weatherCode,sunriseTime,sunsetTime&timesteps=current,1h,1d&units=metric&apikey=${apiKey}`;
   try {
     const response = await fetch(url);
     const weatherData = await response.json();
-    // console.log(weatherData);
+
     // fetching current weather details from the weatherData object
     const currentWeather = weatherData.data.timelines[2].intervals[0].values;
     const nextHourWeather = weatherData.data.timelines[1].intervals;
@@ -37,7 +37,7 @@ async function fetchWeatherData(location) {
 
     updateUI(currentWeather, next12HourTemp, dailyForecast);
   } catch (error) {
-    console.error("Error message during fetching data => ", error);
+    console.error("Error message during fetching data => ", error.code);
   }
 }
 
@@ -66,4 +66,3 @@ const inputField = document.getElementById("searchValue");
 inputField.addEventListener("keydown", (event) => {
   if (event.key === "Enter") validateInputField();
 });
-
