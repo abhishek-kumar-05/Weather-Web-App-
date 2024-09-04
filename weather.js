@@ -4,7 +4,7 @@ import { updateUI } from "./updateui.js";
 setInterval(updateTime, 1000); // calling the updateTime function every second
 
 // apiKey
-const apiKey = "Fyjm0Uz6Qy1lUTT1Eu7BAW4LIcEQFFFI";
+const apiKey = "Add you api key";
 
 // function get exact data about weather using long and lat
 async function fetchWeatherData(location) {
